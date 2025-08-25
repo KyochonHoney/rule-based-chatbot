@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      # ONNX 모델을 호스트와 공유하기 위한 볼륨
+      # 호스트의 /opt/models 디렉토리를 생성해야 합니다.
+      - /opt/models:/models:ro
+    environment:
+      # .env 파일의 변수들을 컨테이너 환경변수로 주입
+      - EMBED_ONNX_DIR=/models/emb
+      - RERANK_ONNX_DIR=/models/rerank
+      - CONFIDENCE_TH=0.52
+      - RERANK_COND_GAP=0.06
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+
+# 추후 다른 서비스들(qdrant, meilisearch, redis 등)을 여기에 추가할 수 있습니다.
+# volumes:
+#   qdrant_storage:
+#   meili_data:
+#   postgres_data:

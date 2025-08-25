@@ -1,0 +1,13 @@
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Downloaded models (These are outside the project, but listed for clarity)
+# Ensure you do not commit the contents of C:\opt\models
+/C/opt/models/
+
+# Utility scripts
+prepare_models.py
